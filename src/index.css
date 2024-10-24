@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family:'Sabon';
+  src:url('../public/fonts/Sabon_Roman_Oldstyle_Figures.ttf') format('ttf') ;
+}
