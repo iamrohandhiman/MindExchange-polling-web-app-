@@ -13,7 +13,26 @@ const PollForm = () => {
     subtopic: ''
   });
 
+  const categories = [
+    { value: 'geopolitics', label: 'Geopolitics' },
+    { value: 'fashion', label: 'Fashion' },
+    { value: 'movies', label: 'Movies' },
+    { value: 'music', label: 'Music' },
+    { value: 'rap', label: 'Rap' },
+    { value: 'science', label: 'Science' },
+    { value: 'mathematics', label: 'Mathematics' },
+    { value: 'physics', label: 'Physics' },
+    { value: 'technology', label: 'Technology' },
+    { value: 'sports', label: 'Sports' },
+    { value: 'gaming', label: 'Gaming' },
+    { value: 'food', label: 'Food & Cuisine' },
+    { value: 'travel', label: 'Travel' },
+    { value: 'literature', label: 'Literature' },
+    { value: 'art', label: 'Art' }
+  ];
+
   const [error, setError] = useState('');
+  const [showCustomSubtopic, setShowCustomSubtopic] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,6 +40,17 @@ const PollForm = () => {
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleSubtopicChange = (e) => {
+    const value = e.target.value;
+    if (value === 'custom') {
+      setShowCustomSubtopic(true);
+      setFormData(prev => ({ ...prev, subtopic: '' }));
+    } else {
+      setShowCustomSubtopic(false);
+      setFormData(prev => ({ ...prev, subtopic: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -37,7 +67,7 @@ const PollForm = () => {
 
     try {
       await axios.post('http://localhost:5000/api/questions', newPoll);
-      navigate('/'); // Redirect to browse polls after successful creation
+      navigate('/');
     } catch (error) {
       setError('Error creating poll. Please try again.');
       console.error('Error creating new poll:', error);
@@ -45,9 +75,9 @@ const PollForm = () => {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-8 px-4">
-      <div className="bg-gray-100 rounded-md p-6 shadow-md">
-        <h2 className="text-blue-950 font-Sabon font-semibold text-3xl mb-6">
+    <div className="max-w-2xl  px-4">
+      <div className="  p-6 ">
+        <h2 className="text-blue-950 font-Sabon font-semibold text-[50px] mb-6">
           Create New Poll
         </h2>
         
@@ -58,16 +88,16 @@ const PollForm = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <label className="block font-Sabon text-xl text-blue-950">
-              Question
+          <div className="space-y-2 pl-10 ">
+            <label className="flex-col justify-center items-center font-Sabon text-xl text-black ">
+               <span className='text-[30px]'>Question  <span className='text-[20px] underline'> Need an opinion? ask the world!</span></span>
             </label>
             <input
               type="text"
               name="question"
               value={formData.question}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded font-Sabon text-lg focus:outline-none focus:border-blue-500"
+              className="w-full p-2 border-[3px] border-blue-300 font-Sabon text-lg focus:outline-none focus:border-blue-500"
               required
             />
           </div>
@@ -90,17 +120,40 @@ const PollForm = () => {
 
           <div className="space-y-2">
             <label className="block font-Sabon text-xl text-blue-950">
-              Subtopic
+              Category
             </label>
-            <input
-              type="text"
-              name="subtopic"
-              value={formData.subtopic}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded font-Sabon text-lg focus:outline-none focus:border-blue-500"
+            <select
+              value={showCustomSubtopic ? 'custom' : formData.subtopic}
+              onChange={handleSubtopicChange}
+              className="w-full p-2 border border-gray-300 rounded font-Sabon text-lg focus:outline-none focus:border-blue-500 bg-white"
               required
-            />
+            >
+              <option value="">Select a category</option>
+              {categories.map(category => (
+                <option key={category.value} value={category.value}>
+                  {category.label}
+                </option>
+              ))}
+              <option value="custom">Custom Category</option>
+            </select>
           </div>
+
+          {showCustomSubtopic && (
+            <div className="space-y-2">
+              <label className="block font-Sabon text-xl text-blue-950">
+                Custom Category
+              </label>
+              <input
+                type="text"
+                name="subtopic"
+                value={formData.subtopic}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded font-Sabon text-lg focus:outline-none focus:border-blue-500"
+                required
+                placeholder="Enter custom category"
+              />
+            </div>
+          )}
 
           <div className="flex gap-4 pt-4">
             <button

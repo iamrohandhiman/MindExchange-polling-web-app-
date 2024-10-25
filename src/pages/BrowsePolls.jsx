@@ -1,36 +1,42 @@
-import React, { useCallback } from 'react'
-import { Poll } from '../component/Poll'
-import { useEffect } from 'react';
-import { useState } from 'react' 
+import React, { useState, useEffect } from 'react';
+import { Poll } from '../component/Poll';
+import { Header} from '../layouts/Header'
 import axios from 'axios';
 
-
-
 export const BrowsePolls = () => {
-
-
-
-  const [questions,setQuestions] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/questions')
       .then(response => {
-        setQuestions(response.data);  
+        setQuestions(response.data);
       })
       .catch(error => {
         console.error("There was an error fetching the questions!", error);
       });
-
   }, []);
 
-  console.log(questions)
-  function updateCount(id,modifiedQuestion){
+  // Filter questions based on search query
+  const filteredQuestions = questions.filter(question => {
+    const search = searchQuery.toLowerCase();
+    return (
+      question.question.toLowerCase().includes(search) ||
+      question.subtopic.toLowerCase().includes(search) ||
+      question.option1.toLowerCase().includes(search) ||
+      question.option2.toLowerCase().includes(search) ||
+      question.option3.toLowerCase().includes(search) ||
+      question.option4.toLowerCase().includes(search)
+    );
+  });
+
+  function updateCount(id, modifiedQuestion) {
     let copy_questions = [...questions];
     const index = copy_questions.findIndex(question => question.id === id);
     copy_questions[index] = modifiedQuestion;
     setQuestions(copy_questions);
 
-     axios.put(`http://localhost:5000/api/questions/${id}`, modifiedQuestion)
+    axios.put(`http://localhost:5000/api/questions/${id}`, modifiedQuestion)
       .then(response => {
         console.log("Successfully updated in backend", response.data);
       })
@@ -39,13 +45,18 @@ export const BrowsePolls = () => {
       });
   }
 
-
   return (
-    
-    <div className='pl-8 mt-6'>
-      {questions.map((question,index)=> <Poll question={questions[index]} updateCount={updateCount} />)}
-    </div>
-    
-   
-  )
-}
+    <>
+      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <div className='pl-8 mt-6'>
+        {filteredQuestions.map((question) => (
+          <Poll 
+            key={question.id} 
+            question={question} 
+            updateCount={updateCount} 
+          />
+        ))}
+      </div>
+    </>
+  );
+};
