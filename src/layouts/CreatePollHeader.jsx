@@ -1,18 +1,26 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 export const CreatePollHeader = () => {
   return (
     <div className="flex justify-start items-center">
-
       {/* Create Poll Button */}
       <div className="flex items-center justify-start">
-        <div 
-          className="mt-5 flex flex-col justify-between items-center font-Sabon text-[20px] font-bold w-[200px] h-[50px] cursor-pointer ml-3 hover:bg-blue-100"
-          style={{
-            backgroundImage: `url('../../public/assets/CreatePoll.png')`,
-            backgroundSize: 'cover', // Adjusts background size, optional
-            backgroundPosition: 'center', // Centers the image, optional
-          }}
+        <NavLink 
+          to="/CreatePoll"
+          className={({ isActive }) => `
+            mt-5 flex flex-col justify-between items-center font-Sabon text-[20px] font-bold w-[200px] h-[50px] cursor-pointer ml-3 hover:bg-blue-100
+            ${isActive ? 'bg-cover bg-center' : ''}
+          `}
+          style={({ isActive }) => 
+            isActive 
+              ? {
+                  backgroundImage: `url('../../public/assets/CreatePoll.png')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }
+              : {}
+          }
         >
           <div className="w-full text-center pt-2">
             <div className="flex justify-center items-center space-x-2">
@@ -22,13 +30,28 @@ export const CreatePollHeader = () => {
               </svg>
             </div>
           </div>
-          <div className="bg-black w-full h-[3px] shadow"></div>
-        </div>
+          <div className="bg-black w-full h-[3px] shadow" />
+        </NavLink>
       </div>
 
       {/* Browse Poll Button */}
       <div className="flex items-center justify-start">
-        <div className="bg-gray-100 mt-5 flex flex-col justify-between items-center font-Sabon text-[20px] font-bold w-[200px] h-[50px] cursor-pointer ml-3 hover:bg-blue-100">
+        <NavLink 
+          to="/"
+          className={({ isActive }) => `
+            mt-5 flex flex-col justify-between items-center font-Sabon text-[20px] font-bold w-[200px] h-[50px] cursor-pointer ml-3 hover:bg-blue-100
+            ${isActive ? 'bg-cover bg-center' : 'bg-gray-100'}
+          `}
+          style={({ isActive }) => 
+            isActive 
+              ? {
+                  backgroundImage: `url('../../public/assets/CreatePoll.png')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }
+              : {}
+          }
+        >
           <div className="w-full text-center pt-2">
             <div className="flex justify-center items-center space-x-2">
               <div>Browse Poll</div>
@@ -37,10 +60,11 @@ export const CreatePollHeader = () => {
               </svg>
             </div>
           </div>
-          <div className="bg-black w-full h-[3px] shadow"></div>
-        </div>
+          <div className="bg-black w-full h-[3px] shadow" />
+        </NavLink>
       </div>
-
     </div>
   );
 };
+
+export default CreatePollHeader;

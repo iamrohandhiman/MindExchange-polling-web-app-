@@ -16,7 +16,7 @@ export const Poll = ({question, updateCount}) => {
   if (!clickStatus) {
     return (
       <>
-        <div className='mt-8 w-[700px] bg-gray-100 flex-row  space-y-1 justify-center items-center rounded-sm'>
+        <div className='mt-8 w-[700px] bg-gray-100 flex-row  space-y-1 justify-center items-center rounded-md'>
           <div className='text-blue-950 pl-2 flex justify-start items-center font-Sabon font-semibold text-[30px] underline-offset-2 cursor-default'>
             {question.question}
           </div>
@@ -61,25 +61,25 @@ export const Poll = ({question, updateCount}) => {
           <div className='transition-all delay:50 relative   pl-[10px] flex justify-between items-center font-Sabon text-[30px] cursor-default w-full text-white'>
             <div className='z-20 pl-2'>{question.option1}</div>
             <div className='absolute h-full border-[3px] border-black bg-blue-500 z-10' style={{ width: `${width1}px` }}></div>
-            <div className='pr-7 text-gray-800'>{((question.count1 / sum) * 100).toFixed(1)}%</div>
+            <div className='pr-7 text-gray-800 z-20'>{((question.count1 / sum) * 100).toFixed(1)}%</div>
           </div>
 
           <div className='transition-all delay:50 relative pl-[10px] flex justify-between items-center font-Sabon text-[30px] cursor-default w-full  text-white'>
             <div className='z-20 pl-2'>{question.option2}</div>
             <div className='absolute h-full border-[3px] border-black bg-blue-500 z-10' style={{ width: `${width2}px` }}></div>
-            <div className='pr-7 text-gray-800'>{((question.count2 / sum) * 100).toFixed(1)}%</div>
+            <div className='pr-7 text-gray-800 z-20'>{((question.count2 / sum) * 100).toFixed(1)}%</div>
           </div>
 
           <div className='transition-all delay:50 relative pl-[10px] flex justify-between items-center font-Sabon text-[30px] cursor-default w-full  text-white'>
             <div className='z-20 pl-2' >{question.option3}</div>
             <div className='absolute h-full border-[3px] border-black bg-blue-500 z-10' style={{ width: `${width3}px` }}></div>
-            <div className='pr-7 pl-2 text-gray-800'>{((question.count3 / sum) * 100).toFixed(1)}%</div>
+            <div className='pr-7 pl-2 text-gray-800 z-20'>{((question.count3 / sum) * 100).toFixed(1)}%</div>
           </div>
 
           <div className='transition-all delay:50 relative pl-[10px] flex justify-between items-center font-Sabon text-[30px] cursor-default w-full  text-white'>
             <div className='z-20 pl-2'>{question.option4}</div>
             <div className='absolute h-full border-[3px] border-black bg-blue-500 z-10' style={{ width: `${width4}px` }}></div>
-            <div className='pr-7 text-gray-800'>{((question.count4 / sum) * 100).toFixed(1)}%</div>
+            <div className='pr-7 text-gray-800 z-20'>{((question.count4 / sum) * 100).toFixed(1)}%</div>
           </div>
 
           <div className='flex justify-end items-center font-Sabon text-[12px] pl-[10px] w-full h-[20px] pr-1'>
